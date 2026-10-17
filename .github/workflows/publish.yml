@@ -56,7 +56,9 @@ jobs:
         with:
           key: ${{ matrix.target }}
       - name: Build
-        run: cargo build --release --locked --target ${{ matrix.target }}
+        # Fork: Cargo.lock in-repo references crates.io zenmoney-rs; we depend on the
+        # git fork instead, so let cargo resolve the lock at build time.
+        run: cargo build --release --target ${{ matrix.target }}
       - name: Package
         shell: bash
         run: |
