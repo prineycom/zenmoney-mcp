@@ -195,10 +195,10 @@ fn resolve_sides(
         TransactionType::Expense => {
             let instrument = resolve_instrument(maps, &params.account_id, params.instrument_id)?;
             Ok(ResolvedSides {
-                outcome_account: Some(AccountId::new(params.account_id.clone())),
+                outcome_account: AccountId::new(params.account_id.clone()),
                 outcome: params.amount,
                 outcome_instrument: instrument,
-                income_account: Some(AccountId::new(params.account_id.clone())),
+                income_account: AccountId::new(params.account_id.clone()),
                 income: 0.0_f64,
                 income_instrument: instrument,
             })
@@ -206,10 +206,10 @@ fn resolve_sides(
         TransactionType::Income => {
             let instrument = resolve_instrument(maps, &params.account_id, params.instrument_id)?;
             Ok(ResolvedSides {
-                outcome_account: Some(AccountId::new(params.account_id.clone())),
+                outcome_account: AccountId::new(params.account_id.clone()),
                 outcome: 0.0_f64,
                 outcome_instrument: instrument,
-                income_account: Some(AccountId::new(params.account_id.clone())),
+                income_account: AccountId::new(params.account_id.clone()),
                 income: params.amount,
                 income_instrument: instrument,
             })
@@ -226,10 +226,10 @@ fn resolve_sides(
             let to_instrument = resolve_instrument(maps, to_account_id, params.to_instrument_id)?;
             let to_amount = params.to_amount.unwrap_or(params.amount);
             Ok(ResolvedSides {
-                outcome_account: Some(AccountId::new(params.account_id.clone())),
+                outcome_account: AccountId::new(params.account_id.clone()),
                 outcome: params.amount,
                 outcome_instrument: from_instrument,
-                income_account: Some(AccountId::new(to_account_id.clone())),
+                income_account: AccountId::new(to_account_id.clone()),
                 income: to_amount,
                 income_instrument: to_instrument,
             })
