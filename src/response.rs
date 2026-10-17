@@ -143,16 +143,16 @@ impl TransactionResponse {
             id: tx.id.to_string(),
             date: tx.date.to_string(),
             income: tx.income,
-            income_account: tx
-                .income_account
-                .as_ref()
-                .map_or_else(|| "<deleted>".to_owned(), |acc| maps.account_name(acc.as_inner())),
+            income_account: tx.income_account.as_ref().map_or_else(
+                || "<deleted>".to_owned(),
+                |acc| maps.account_name(acc.as_inner()),
+            ),
             income_currency: maps.instrument_symbol(tx.income_instrument.into_inner()),
             outcome: tx.outcome,
-            outcome_account: tx
-                .outcome_account
-                .as_ref()
-                .map_or_else(|| "<deleted>".to_owned(), |acc| maps.account_name(acc.as_inner())),
+            outcome_account: tx.outcome_account.as_ref().map_or_else(
+                || "<deleted>".to_owned(),
+                |acc| maps.account_name(acc.as_inner()),
+            ),
             outcome_currency: maps.instrument_symbol(tx.outcome_instrument.into_inner()),
             tags,
             payee: tx.payee.clone(),
@@ -757,10 +757,10 @@ mod tests {
             changed: DateTime::from_timestamp(1_700_000_000, 0).expect("valid timestamp"),
             user: UserId::new(1),
             income_instrument: InstrumentId::new(1),
-            income_account: Some(AccountId::new("acc-1".to_owned())),
+            income_account: AccountId::new("acc-1".to_owned())),
             income: 0.0,
             outcome_instrument: InstrumentId::new(1),
-            outcome_account: Some(AccountId::new("acc-1".to_owned())),
+            outcome_account: AccountId::new("acc-1".to_owned())),
             outcome: 5_000.0,
             tag: Some(vec![TagId::new("tag-1".to_owned())]),
             merchant: None,
@@ -792,10 +792,10 @@ mod tests {
             changed: DateTime::from_timestamp(1_700_000_000, 0).expect("valid timestamp"),
             user: UserId::new(1),
             income_instrument: InstrumentId::new(1),
-            income_account: Some(AccountId::new("acc-1".to_owned())),
+            income_account: AccountId::new("acc-1".to_owned())),
             income: 1_000.0,
             outcome_instrument: InstrumentId::new(1),
-            outcome_account: Some(AccountId::new("acc-1".to_owned())),
+            outcome_account: AccountId::new("acc-1".to_owned())),
             outcome: 0.0,
             tag: None,
             merchant: None,

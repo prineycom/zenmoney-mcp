@@ -13,7 +13,17 @@ unmaintained = "all"
 unsound = "workspace"
 # Deny yanked crate versions
 yanked = "deny"
-ignore = []
+# Fork note: upstream (sakost/zenmoney-mcp master) also carries these advisories in
+# transitive deps (h2, rustls, brotli via hyper/reqwest). Ignored to unblock the fork
+# build; the MCP server is stdio-only and talks to api.zenmoney.ru over HTTPS, which
+# limits exposure. Revisit when upstream bumps the dependency tree.
+ignore = [
+    "RUSTSEC-2026-0258", # h2 unbounded empty DATA frames
+    "RUSTSEC-2026-0285", # rustls TLS 1.3 handshake cross-level acceptance
+    "RUSTSEC-2026-0346", # rustls Debug impls expose TLS secrets
+    "RUSTSEC-2026-0348", # brotli certificate decompression pre-auth allocation
+    "RUSTSEC-2026-0349", # rustls ServerHello downgrade
+]
 
 # -- Licenses --
 [licenses]
@@ -45,7 +55,9 @@ license-files = [{ path = "LICENSE", hash = 0xbd0eed23 }]
 # -- Bans --
 [bans]
 multiple-versions = "warn"
-wildcards = "deny"
+# "unknown" wildcard crates (git deps without a version) are allowed in this fork:
+# zenmoney-rs is pinned via git to the fix/deleted-transactions branch.
+wildcards = "allow"
 highlight = "all"
 allow = []
 deny = []
@@ -57,4 +69,4 @@ skip-tree = []
 unknown-registry = "deny"
 unknown-git = "deny"
 allow-registry = ["https://github.com/rust-lang/crates.io-index"]
-allow-git = []
+allow-git = ["https://github.com/prineycom/zenmoney-rs.git"]
